@@ -19,7 +19,7 @@ npx hardhat clean
 
 Компиляция всех контрактов из contracts
 ```shell
-npx hardhat compile 
+npx hardhat compile
 ```
 
 Тестирование всех контрактов из contracts
