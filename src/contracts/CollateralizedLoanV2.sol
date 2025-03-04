@@ -64,7 +64,6 @@ contract CollateralizedLoan is Ownable, ReentrancyGuard {
 
     // Функция для запроса займа
     function borrow(IERC20 _token, uint256 _amount) external payable nonReentrant {
-        // Модификатор nonReentrant предотвращает повторный вход в функцию (защита от атак)
         require(loans[msg.sender].active == false, "Active loan exists"); // Убедиться, что у заемщика нет активного займа
         require(allowedTokens[address(_token)], "Token not allowed");     // Проверить, что токен разрешен для займов
         require(msg.value > 0, "ETH collateral required");                // Убедиться, что заемщик отправил ETH как залог
