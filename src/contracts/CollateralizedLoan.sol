@@ -172,7 +172,7 @@ contract CollateralizedLoan is Ownable, ReentrancyGuard {
 
         emit PaymentMade(msg.sender, paymentAmount, loan.paymentsMade);
 
-        if (loan.paymentsMade == loan.paymentsRequired && loan.totalDebt <= 0) {
+        if (loan.paymentsMade == loan.paymentsRequired) {
             loan.active = false;
             totalActiveCollateral -= loan.collateral;
             payable(msg.sender).transfer(loan.collateral);
@@ -206,11 +206,12 @@ contract CollateralizedLoan is Ownable, ReentrancyGuard {
     }
 
     // Аварийный вывод ETH с учетом ликвидации просрочек (теперь выводит только ликвидированные залоги)
-    function emergencyWithdrawETH() external onlyOwner nonReentrant {
-        uint256 freeETH = liquidatedCollateral;
-        require(freeETH > 0, "No free ETH to withdraw");
-        payable(owner()).transfer(freeETH);
-        emit EmergencyWithdrawETH(freeETH);
+    function emergencyWithdrawETH() external onlyOwner {
+        uint256 amount = liquidatedCollateral;
+        require(amount > 0, "No ETH to withdraw");
+        liquidatedCollateral = 0; // Reset
+        payable(owner()).transfer(amount);
+        emit EmergencyWithdrawETH(amount);
     }
 
     // Ликвидация просроченного займа (только владелец)
