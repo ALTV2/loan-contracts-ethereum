@@ -8,7 +8,6 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title CollateralizedLoan
- * @dev Контракт займа с гибкими параметрами и повышенной надежностью
  */
 contract CollateralizedLoan is ReentrancyGuard, Ownable {
     // Константы
@@ -16,7 +15,7 @@ contract CollateralizedLoan is ReentrancyGuard, Ownable {
     uint256 public constant MONTHS_PER_YEAR = 12;
     uint256 public constant BASIS_POINTS = 10000; // 10000 = 100%
     uint256 public constant MIN_COLLATERAL_RATIO = 15000; // 150% в базисных пунктах
-    uint256 public constant DAYS_PER_MONTH = 30;
+    uint256 public constant DAYS_PER_MONTH = 30; //
     uint256 public constant MAX_LOAN_DURATION_MONTHS = 36; // Максимальная длительность займа
     uint256 public constant LIQUIDATION_THRESHOLD_DAYS = 60; // Порог ликвидации в днях
 
@@ -26,7 +25,7 @@ contract CollateralizedLoan is ReentrancyGuard, Ownable {
     uint256 public loanDurationMonths; // Длительность займа в месяцах (настраиваемая)
 
     struct Loan {
-        address borrower;          // Адрес заемщика
+        address borrower;         // Адрес заемщика
         IERC20 token;             // Токен займа
         uint256 principal;        // Основная сумма займа
         uint256 collateral;       // Сумма залога в ETH
@@ -70,6 +69,7 @@ contract CollateralizedLoan is ReentrancyGuard, Ownable {
 
     /**
      * @dev Обновление параметров займа (только владелец)
+     //todo вынести в отдельную структуру и хранить в займе
      */
     function updateParameters(
         uint256 _interestRate,
