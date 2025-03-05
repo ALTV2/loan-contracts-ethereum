@@ -16,7 +16,7 @@ contract CollateralizedLoan is Ownable, ReentrancyGuard {
     // Глобальные параметры
     uint256 public minCollateralRatio = 13000;        // Минимальный коэффициент залога (130%)
     uint256 public minLoanDurationMonths = 1;         // Минимальная длительность займа в месяцах
-    uint256 public minLoanAmountInETH = 0.1 ether;    // Минимальная сумма займа в ETH (0.1 ETH)
+    uint256 public minLoanAmountInETH = 0.01 ether;    // Минимальная сумма займа в ETH (0.1 ETH)
 
     // Маппинги
     mapping(address => Loan) public loans;            // Хранит информацию о займах
